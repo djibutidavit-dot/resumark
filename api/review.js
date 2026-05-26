@@ -40,7 +40,7 @@ Rules: Brutally honest. 3-6 issues by severity. 2-4 line rewrites from ACTUAL re
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-6',
         max_tokens: 2048,
         messages,
       }),
