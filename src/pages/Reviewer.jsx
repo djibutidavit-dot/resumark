@@ -47,12 +47,21 @@ export default function Reviewer() {
     return () => clearInterval(i)
   }, [step])
 
-  const handleFile = useCallback((file) => {
+ const handleFile = useCallback(async (file) => {
     if (!file) return
     if (file.type === 'application/pdf') {
-      const reader = new FileReader()
-      reader.onload = () => { setPdfBase64(reader.result.split(',')[1]); setPdfName(file.name); setResumeText(''); setError(null) }
-      reader.readAsDataURL(file)
+      setPdfName(file.name)
+      setError(null)
+      const arrayBuffer = await file.arrayBuffer()
+      const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise
+      let text = ''
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i)
+        const content = await page.getTextContent()
+        text += content.items.map(item => item.str).join(' ') + '\n'
+      }
+      setResumeText(text)
+      setPdfBase64(null)
     } else if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
       const reader = new FileReader()
       reader.onload = () => { setResumeText(reader.result); setPdfBase64(null); setPdfName(''); setError(null) }
