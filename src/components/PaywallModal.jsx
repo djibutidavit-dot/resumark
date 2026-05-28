@@ -1,6 +1,6 @@
 import { useAuth } from '../App'
 
-const STRIPE_LINK = 'https://buy.stripe.com/test_14AeV67oP0Qp2Uo7Iw4ko00'
+const STRIPE_LINK = 'https://buy.stripe.com/test_bJe5kwcbGeLf1MT7oQfYY00'
 
 export default function PaywallModal({ onClose }) {
   const { user, signInWithGoogle } = useAuth()
